@@ -1,14 +1,7 @@
-
+from Interpolation.utility import construct_table, fact, calc_u
 
 def gauss_forward_interpolation(x, y, int_x):
-    # Construct table
-    fd = [y]
-    for i in range(1, len(y)):
-        temp = []
-        for j in range(0, len(y)-i):
-            temp.append(fd[i-1][j+1] - fd[i-1][j])
-        fd.append(temp)
-
+    fd = construct_table(y)
 
     start = len(y)/2 - 1 if len(y)%2 == 0 else len(y)//2
     start = int(start)
@@ -21,27 +14,6 @@ def gauss_forward_interpolation(x, y, int_x):
             start -= 1
 
     return val
-
-
-def calc_u(u, n):
-    temp = u
-    for i in range(1, n):
-        if i % 2 == 1:
-            temp *= (u - i)
-        else:
-            temp *= (u + i-1)
-    return temp
-
-
-def fact(num):
-    if num == 0:
-        return 1
-
-    result = num
-    while num != 1:
-        result *= num-1
-        num -= 1
-    return result
 
 
 if __name__ == '__main__':
