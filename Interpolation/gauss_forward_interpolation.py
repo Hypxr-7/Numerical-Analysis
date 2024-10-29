@@ -1,4 +1,4 @@
-from Interpolation.utility import construct_table, fact
+from utility import construct_table, fact
 
 def gauss_forward_interpolation(x, y, int_x):
     fd = construct_table(y)
