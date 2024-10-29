@@ -1,4 +1,4 @@
-from Interpolation.utility import construct_table, fact, calc_u
+from Interpolation.utility import construct_table, fact
 
 def gauss_forward_interpolation(x, y, int_x):
     fd = construct_table(y)
@@ -14,6 +14,15 @@ def gauss_forward_interpolation(x, y, int_x):
             start -= 1
 
     return val
+
+def calc_u(u, n):
+    temp = u
+    for i in range(1, n):
+        if i % 2 == 1:
+            temp *= (u - i)
+        else:
+            temp *= (u + i-1)
+    return temp
 
 
 if __name__ == '__main__':
