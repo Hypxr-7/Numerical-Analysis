@@ -1,7 +1,7 @@
 from utility import *
 
 
-def newtons_divided_difference(x: list, y: list, xx: int) -> float:
+def newtons_divided_difference(x: list[float], y: list[float], xx: int) -> float:
     fdd = get_fdd_table(x, y)
     print("Divided Difference Table:")
     print_table(fdd)
@@ -16,7 +16,7 @@ def newtons_divided_difference(x: list, y: list, xx: int) -> float:
     return approx
 
 
-def get_fdd_table(x: list, y: list) -> list[list[float]]:
+def get_fdd_table(x: list[float], y: list[float]) -> list[list[float]]:
     fdd = [y]
     for i in range(1, len(y)):
         temp = []

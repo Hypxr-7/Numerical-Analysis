@@ -1,4 +1,4 @@
-def fact(num):
+def fact(num: int) -> int:
     if num == 0:
         return 1
 
@@ -9,7 +9,7 @@ def fact(num):
     return result
 
 
-def construct_table(y):
+def construct_table(y: list[float]) -> list[list[float]]:
     fd = [y]
     for i in range(1, len(y)):
         temp = []
