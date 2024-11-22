@@ -31,4 +31,4 @@ if __name__ == '__main__':
     y = [168, 120, 72, 63]
     value_to_find = 6
 
-    print(f"Value at x = {value_to_find}: {newtons_divided_difference(x, y, value_to_find): .6f}")
+    print(f"Value at {value_to_find} is {newtons_divided_difference(x, y, value_to_find):.6f}")
