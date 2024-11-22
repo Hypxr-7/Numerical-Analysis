@@ -33,4 +33,6 @@ def find_start(x: list[float], xx: float) -> int:
         if abs(x[i] - xx) < min:
             min = abs(x[i] - xx)
             min_index = i
+        elif abs(x[i] - xx) == min:
+            min_index = len(x) // 2
     return min_index
