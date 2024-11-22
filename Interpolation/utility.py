@@ -22,7 +22,7 @@ def construct_table(y: list[float]) -> list[list[float]]:
 def print_table(fdd: list[list]) -> None:
     for i in range(len(fdd)):
         for j in range(len(fdd[i])):
-            print(f"{fdd[j][i]: <6.3f}", end=' ')
+            print(f"{fdd[j][i]: <6.5f}", end=' ')
         print()
 
 
