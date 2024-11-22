@@ -1,48 +1,32 @@
-"""
-Modify the following:
-dp: contains the data points
-x: the value to interpolate
-"""
+from utility import *
 
-def interpolate(dp, x):
-    n = len(dp['x'])
+def newtons_divided_difference(x: list, y: list, xx: int) -> float:
+    fdd = get_fdd_table(x, y)
+    print("Divided Difference Table:")
+    print_table(fdd)
 
-    # Initialize fdd with the first column of divided differences
-    fdd = [[(dp['f'][i + 1] - dp['f'][i]) / (dp['x'][i + 1] - dp['x'][i]) for i in range(n - 1)]]
+    approx = fdd[0][0]
+    product = xx - x[0]
 
+    for i in range(1, len(fdd)):
+        approx += fdd[i][0]*product
+        product *= (xx - x[i])
 
-    # Compute the rest of the divided difference table
-    for j in range(1, n-1):
-        temp_column = []
-        for i in range(n-j-1):
-            numerator = fdd[j-1][i+1] - fdd[j-1][i]
-            denominator = dp['x'][i+j+1] - dp['x'][i]
-            temp_column.append(numerator / denominator)
-        fdd.append(temp_column)
-    
-    # Compute interpolated value at x
-    x_term = 1
-    y_int = dp['f'][0]
-    ea = []
+    return approx
 
-    print(f"{'Order':<10} {'f(x)':<10} {'Error':<10}")
-
-    for order in range(1, n):
-        x_term *= (x - dp['x'][order-1])
-        y_int_2 = y_int + fdd[order-1][0] * x_term
-        ea.append(abs(y_int_2 - y_int))
-
-        print(f"{order:<10} {y_int:<10.6f} {ea[order-1]:<10.6f}")
-
-        y_int = y_int_2
-
-    print(f"{n:<10} {y_int:<10.6f}")
-
+def get_fdd_table(x: list, y: list) -> list[list[float]]:
+    fdd = [y]
+    for i in range(1, len(y)):
+        temp = []
+        for j in range(0, len(y) - i):
+            temp.append((fdd[i - 1][j + 1] - fdd[i - 1][j]) / (x[j+i] - x[j]))
+        fdd.append(temp)
+    return fdd
 
 
 if __name__ == '__main__':
-    dp = {
-        'x': [5, 7, 11, 13, 17],
-        'f': [150, 392, 1452, 2366, 5202],
-    }
-    interpolate(dp, 9)
+    x = [3, 7, 9, 10]
+    y = [168, 120, 72, 63]
+    value_to_find = 6
+
+    print(f"Value at x = {value_to_find}: {newtons_divided_difference(x, y, value_to_find): .6f}")
