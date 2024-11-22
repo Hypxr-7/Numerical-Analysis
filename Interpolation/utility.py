@@ -24,3 +24,13 @@ def print_table(fdd: list[list]) -> None:
         for j in range(len(fdd[i])):
             print(f"{fdd[j][i]: <6.3f}", end=' ')
         print()
+
+
+def find_start(x: list[float], xx: float) -> int:
+    min = 99999
+    min_index = 0
+    for i in range(len(x)):
+        if abs(x[i] - xx) < min:
+            min = abs(x[i] - xx)
+            min_index = i
+    return min_index

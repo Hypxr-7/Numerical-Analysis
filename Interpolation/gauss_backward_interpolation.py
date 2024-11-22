@@ -1,36 +1,45 @@
-from utility import construct_table, fact
+from utility import *
 
-def gauss_backward_interpolation(x, y, int_x):
+
+def gauss_backward_interpolation(x: list[float], y: list[float], xx: float) -> float:
     fd = construct_table(y)
+    print_table(fd)
 
-    start = len(y)/2 if len(y)%2 == 0 else len(y)//2
-    start = int(start)
+    start = find_start(x, xx)
+    approx = fd[0][start]
+    u = (xx - x[start]) / (x[1] - x[0])
 
-    val = fd[0][start]
-    u = (int_x - x[start]) / (x[1] - x[0])
     start -= 1
-    for i in range(1, len(y)):
-        uu = calc_u(u, i)
-        val += fd[i][start] * calc_u(u, i) / fact(i)
+    for i in range(1, max_it(start + 1, len(fd))):
+        approx += fd[i][start] * calc_u(u, i) / fact(i)
         if i % 2 == 0:
             start -= 1
 
-    return val
+    return approx
 
 
-def calc_u(u, n):
+def max_it(i: int, n: int) -> int:
+    odd_numbers = [i for i in range(1, n + 1, 2)]
+    even_numbers = [i for i in range(n if n % 2 == 0 else n - 1, 1, -1)]
+    pattern = odd_numbers + even_numbers
+    return pattern[i]
+
+
+def calc_u(u: float, i: int) -> float:
     temp = u
-    for i in range(1, n):
-        if i % 2 == 0:
-            temp *= (u - i+1)
+    inc = 1
+    for j in range(1, i):
+        if j % 2 == 0:
+            temp *= (u - inc)
+            inc += 1
         else:
-            temp *= (u + i)
+            temp *= (u + inc)
     return temp
 
 
 if __name__ == '__main__':
-    int_x = 5
-    x = [ 2,  4,  6,  8]
-    y = [10, 18, 26, 40]
+    x = [39, 49, 59, 69, 79, 89]
+    y = [12, 15, 20, 27, 39, 52]
+    value_to_find = 62
 
-    print(f'Value at {int_x} = {gauss_backward_interpolation(x, y, int_x):.3f}')
+    print(f'Value at {value_to_find} is {gauss_backward_interpolation(x, y, value_to_find):.6f}')
